@@ -296,11 +296,13 @@ class FirebaseAuthService implements IFirebaseAuthService {
     required final String appId,
     final AuthActionCallback afterAuthAction,
     final AuthenticateActions action = AuthenticateActions.authorization,
+    final List<String> permissions = const ['email', 'public_profile'],
   }) async {
     try {
       final facebook.FacebookAuth fAuth = facebook.FacebookAuth.instance;
       await _facebookWebInit(appId);
-      final facebook.LoginResult user = await fAuth.login();
+      final facebook.LoginResult user =
+          await fAuth.login(permissions: permissions);
       if (user.accessToken?.token == null) {
         return const Left(null);
       }
