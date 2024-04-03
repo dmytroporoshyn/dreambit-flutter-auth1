@@ -257,7 +257,7 @@ class FirebaseAuthService implements IFirebaseAuthService {
   }
 
   @override
-  Future<Either<Object?, UserCredential>> googleSignIn({
+  Future<Either<Object, UserCredential>> googleSignIn({
     required final String? webClientId,
     final AuthActionCallback afterAuthAction,
     final AuthenticateActions action = AuthenticateActions.authorization,
@@ -267,7 +267,7 @@ class FirebaseAuthService implements IFirebaseAuthService {
         clientId: kIsWeb ? webClientId : null,
       ).signIn();
       if (user == null) {
-        return const Left(null);
+        return Left(Exception());
       }
       final google.GoogleSignInAuthentication googleAuth =
           await user.authentication;
@@ -292,7 +292,7 @@ class FirebaseAuthService implements IFirebaseAuthService {
   }
 
   @override
-  Future<Either<Object?, UserCredential>> facebookSignIn({
+  Future<Either<Object, UserCredential>> facebookSignIn({
     required final String appId,
     final AuthActionCallback afterAuthAction,
     final AuthenticateActions action = AuthenticateActions.authorization,
@@ -304,7 +304,7 @@ class FirebaseAuthService implements IFirebaseAuthService {
       final facebook.LoginResult user =
           await fAuth.login(permissions: permissions);
       if (user.accessToken?.token == null) {
-        return const Left(null);
+        return Left(Exception());
       }
       final OAuthCredential credential = FacebookAuthProvider.credential(
         user.accessToken!.token,
@@ -339,7 +339,7 @@ class FirebaseAuthService implements IFirebaseAuthService {
   }
 
   @override
-  Future<Either<Object?, UserCredential>> appleSignIn({
+  Future<Either<Object, UserCredential>> appleSignIn({
     final AuthActionCallback afterAuthAction,
     final List<String> scopes = const [],
   }) async {
