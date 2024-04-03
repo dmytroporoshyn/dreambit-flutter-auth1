@@ -341,9 +341,13 @@ class FirebaseAuthService implements IFirebaseAuthService {
   @override
   Future<Either<Object?, UserCredential>> appleSignIn({
     final AuthActionCallback afterAuthAction,
+    final List<String> scopes = const [],
   }) async {
     try {
       final AppleAuthProvider provider = AppleAuthProvider();
+      for (var scope in scopes) {
+        provider.addScope(scope);
+      }
       if (kIsWeb) {
         final UserCredential res = await auth.signInWithPopup(
           provider,
