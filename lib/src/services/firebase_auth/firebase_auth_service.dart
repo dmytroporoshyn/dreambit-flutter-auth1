@@ -1,5 +1,13 @@
 part of '../../../one_day_auth.dart';
 
+class AuthenticationCanceledException implements Exception {
+
+  @override
+  String toString() {
+    return 'Authentication Canceled by User';
+  }
+}
+
 class FirebaseAuthService implements IFirebaseAuthService {
   FirebaseAuthService._i();
 
@@ -267,7 +275,7 @@ class FirebaseAuthService implements IFirebaseAuthService {
         clientId: kIsWeb ? webClientId : null,
       ).signIn();
       if (user == null) {
-        return Left(Exception());
+        return Left(AuthenticationCanceledException());
       }
       final google.GoogleSignInAuthentication googleAuth =
           await user.authentication;
@@ -304,7 +312,7 @@ class FirebaseAuthService implements IFirebaseAuthService {
       final facebook.LoginResult user =
           await fAuth.login(permissions: permissions);
       if (user.accessToken?.token == null) {
-        return Left(Exception());
+        return Left(AuthenticationCanceledException());
       }
       final OAuthCredential credential = FacebookAuthProvider.credential(
         user.accessToken!.token,
