@@ -311,11 +311,11 @@ class FirebaseAuthService implements IFirebaseAuthService {
       await _facebookWebInit(appId);
       final facebook.LoginResult user =
           await fAuth.login(permissions: permissions);
-      if (user.accessToken?.token == null) {
+      if (user.accessToken?.tokenString == null) {
         return Left(AuthenticationCanceledException());
       }
       final OAuthCredential credential = FacebookAuthProvider.credential(
-        user.accessToken!.token,
+        user.accessToken!.tokenString,
       );
       final UserCredential res;
       if (action == AuthenticateActions.reAuthenticate) {

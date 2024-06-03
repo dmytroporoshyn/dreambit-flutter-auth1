@@ -435,10 +435,10 @@ class _MaterialActionDialog extends StatelessWidget {
   }) {
     return isDestructive
         ? Theme.of(context).textButtonTheme.style?.copyWith(
-              overlayColor: MaterialStateProperty.all<Color>(
+              overlayColor: WidgetStateProperty.all<Color>(
                 Colors.red.withOpacity(.08),
               ),
-              foregroundColor: MaterialStateProperty.all<Color>(
+              foregroundColor: WidgetStateProperty.all<Color>(
                 Colors.red,
               ),
             )

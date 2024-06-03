@@ -13,4 +13,4 @@ class ForgottenPasswordMailSent extends OneDayAuthState {
 
   ForgottenPasswordMailSent([this.email]);
 }
- 
+
